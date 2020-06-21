@@ -9,36 +9,50 @@ GAME RULES:
 
 */
 
-document.getElementById('score-0').textContent = '0';
-document.getElementById('score-1').textContent = '0';
-document.getElementById('current-0').textContent = '0';
-document.getElementById('current-1').textContent = '0';
+//scores target
+const resetScore0 = document.getElementById('score-0');
+const resetScore1 = document.getElementById('score-1');
+const resetCurrent0 = document.getElementById('current-0');
+const resetCurrent1 = document.getElementById('current-1');
 
+//button target
 const rollDice = document.getElementsByClassName("btn-roll");
+const hold = document.querySelector('.btn-hold');
+const newGame = document.querySelector('.btn-new');
 
+//dice picture target
+const dicePicture = document.querySelector('.dice');
 let activePlayer = 0;
 let scores = [0,0];
 let roundScore = 0;
 
-const changePlayer = () => {activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+const resetScores = () => {resetScore0.textContent = '0';
+resetScore1.textContent = '0';}
+const resetCurrent = () => {resetCurrent0.textContent = '0';
+resetCurrent1.textContent = '0';}
+
+resetCurrent();
+resetScores();
+dicePicture.style.display = 'none';
+
+const changePlayer = () => {
+    
+    activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
     roundScore = 0;
 
 //resets the current score to 0;
-     document.getElementById('current-0').textContent = '0';
-    document.getElementById('current-1').textContent = '0';
+    resetCurrent();
     
  //toggles the active player indicator! Good for switching classes
     document.querySelector('.player-0-panel').classList.toggle('active');
     document.querySelector('.player-1-panel').classList.toggle('active');
     
-    document.querySelector('.dice').style.display = 'none';
+    dicePicture.style.display = 'none';
 }
 
 const roll = () => {
 
-    document.querySelector('.dice').style.display = 'block';
-
-    let image = document.getElementsByClassName("dice");
+    dicePicture.style.display = 'block';
 
 //random number
     let x = Math.floor(Math.random() * 6) + 1;
@@ -46,22 +60,22 @@ const roll = () => {
 //dice showing pictures
     switch (true) {
         case x === 1:
-            image[0].src = "dice-1.png";
+            dicePicture.src = "dice-1.png";
         break;
         case x === 2:
-            image[0].src = "dice-2.png";
+            dicePicture.src = "dice-2.png";
             break;
         case x === 3:
-            image[0].src = "dice-3.png";
+            dicePicture.src = "dice-3.png";
             break;
         case x === 4:
-            image[0].src = "dice-4.png";
+            dicePicture.src = "dice-4.png";
             break;
         case x === 5:
-            image[0].src = "dice-5.png";
+            dicePicture.src = "dice-5.png";
             break;
         case x === 6:
-            image[0].src = "dice-6.png";
+            dicePicture.src = "dice-6.png";
             break;
     }
 
@@ -77,8 +91,6 @@ if (x>1) {
 }
 }
 
-const hold = document.querySelector('.btn-hold');
-
 const holdScore = () => {
     //add current score to global score
     scores[activePlayer] += roundScore;
@@ -86,17 +98,26 @@ const holdScore = () => {
     //update the UI
     document.querySelector('#score-' + activePlayer).textContent =  scores[activePlayer];
 
-    //change Player
-
-    changePlayer();
-
     //check if the player won the game
     if (scores[activePlayer] >= 100) 
 {
-    alert(`Player ${activePlayer} won the game!`)
+    document.querySelector('#name-' + activePlayer).textContent = 'WINNER!';
+    resetCurrent();
+    dicePicture.style.display = 'none';
+} else {
+//change Player
+changePlayer();
 }
 
 }
 
+const startNewGame = () => {
+    resetCurrent();
+    resetScores();
+    document.querySelector('#name-0').textContent = 'PLAYER 1';
+    document.querySelector('#name-1').textContent= 'PLAYER 2';
+}
+
+newGame.addEventListener('click', startNewGame);
 hold.addEventListener("click", holdScore);
 rollDice[0].addEventListener("click", roll);
