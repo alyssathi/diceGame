@@ -1,4 +1,5 @@
 A simple dice game.
+[live site here!](https://lyssthipigdicegame.netlify.app)
 
 GAME RULES:
 
