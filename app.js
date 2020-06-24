@@ -102,7 +102,7 @@ if (gameplay) {  //add current score to global score
     document.querySelector('#score-' + activePlayer).textContent =  scores[activePlayer];
 
     //check if the player won the game
-    if (scores[activePlayer] >= 10) 
+    if (scores[activePlayer] >= 100) 
 {
     document.querySelector('#name-' + activePlayer).textContent = 'WINNER!';
     resetCurrent();
