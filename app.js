@@ -9,9 +9,6 @@ GAME RULES:
 
 */
 
-//State Variable
-let gameplay = true;
-
 //scores target
 const resetScore0 = document.getElementById('score-0');
 const resetScore1 = document.getElementById('score-1');
@@ -55,8 +52,7 @@ const changePlayer = () => {
 
 const roll = () => {
 
-    if (gameplay) 
-    {dicePicture.style.display = 'block';
+    dicePicture.style.display = 'block';
 
 //random number
     let x = Math.floor(Math.random() * 6) + 1;
@@ -80,7 +76,8 @@ const roll = () => {
             break;
         case x === 6:
             dicePicture.src = "dice-6.png";
-            break;}
+            break;
+    }
 
 //if statements to add to current score IF =/ 1
 
@@ -91,11 +88,11 @@ if (x>1) {
 } else{
     //next player
     changePlayer();
-}}
+}
 }
 
 const holdScore = () => {
-if (gameplay) {  //add current score to global score
+    //add current score to global score
     scores[activePlayer] += roundScore;
 
     //update the UI
@@ -107,11 +104,11 @@ if (gameplay) {  //add current score to global score
     document.querySelector('#name-' + activePlayer).textContent = 'WINNER!';
     resetCurrent();
     dicePicture.style.display = 'none';
-    gameplay = false;
 } else {
 //change Player
 changePlayer();
-}}
+}
+
 }
 
 const startNewGame = () => {
@@ -119,7 +116,6 @@ const startNewGame = () => {
     resetScores();
     document.querySelector('#name-0').textContent = 'PLAYER 1';
     document.querySelector('#name-1').textContent= 'PLAYER 2';
-    gameplay = true;
 }
 
 newGame.addEventListener('click', startNewGame);
